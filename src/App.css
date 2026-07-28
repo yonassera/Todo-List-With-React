@@ -1,0 +1,166 @@
+.main-container {
+  min-width: 600px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--surface);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.motto {
+  text-align: center;
+  margin-top: 8px;
+  color: var(--text-light);
+}
+
+form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+input[type="text"] {
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  flex: 1;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: var(--box-shadow-simple);
+}
+
+.task-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-container {
+  background-color: var(--bg);
+  box-shadow: var(--box-shadow-internal);
+  border-radius: 8px;
+}
+
+.tasks {
+  background-color: var(--surface);
+  border-radius: 3px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  align-items: center;
+  padding: 8px;
+}
+
+.nav-btn-container {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 16px;
+  background-color: var(--primary);
+  border-radius: 8px;
+  color: var(--surface);
+  border: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  color: var(--surface);
+  background-color: var(--primary-hover);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.nav-btn:active {
+  transform: scale(1);
+}
+
+.nav-btn {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.clear-btn {
+  border: 1px solid var(--danger) !important;
+  color: var(--danger) !important;
+  background-color: var(--danger-light) !important;
+  margin-top: 16px;
+  align-self: flex-end;
+}
+
+.clear-btn:hover {
+  background-color: var(--danger) !important;
+  color: var(--surface) !important;
+}
+
+.del-btn:hover {
+  fill: var(--danger);
+  cursor: pointer;
+}
+
+.task-left {
+  color: var(--text-light);
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 16px;
+}
+
+.no-tasks-text {
+  color: var(--text-light);
+  text-align: center;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
+input[type="checkbox"]:hover,
+label:hover {
+  cursor: pointer;
+}
+
+label {
+  color: var(--text);
+  font-size: 1rem;
+  display: flex;
+  gap: 16px;
+}
