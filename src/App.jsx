@@ -45,10 +45,7 @@ export default function App() {
   function toggleState(taskId) {
     const tempTaskArray = tasksArray.map((taskObj) => {
       if (taskObj.id === taskId) {
-        taskObj.isCompleted === true
-          ? (taskObj.isCompleted = false)
-          : (taskObj.isCompleted = true);
-        return taskObj;
+        return { ...taskObj, isCompleted: !taskObj.isCompleted };
       }
       return taskObj;
     });
@@ -82,10 +79,12 @@ export default function App() {
   }
 
   function clearCompleted() {
-    const tempArray = tasksArray.filter((taskObj) => taskObj.isCompleted !== true)
+    const tempArray = tasksArray.filter(
+      (taskObj) => taskObj.isCompleted !== true,
+    );
     setTasksArray(tempArray);
-    localStorage.removeItem("tasks")
-    localStorage.setItem("tasks", JSON.stringify(tempArray))
+    localStorage.removeItem("tasks");
+    localStorage.setItem("tasks", JSON.stringify(tempArray));
   }
 
   const handleSubmit = (event) => {
@@ -140,7 +139,9 @@ export default function App() {
                 handleDelete={handleDelete}
               />
             </div>
-            <button onClick={clearCompleted} className="btn clear-btn">Clear Completed</button>
+            <button onClick={clearCompleted} className="btn clear-btn">
+              Clear Completed
+            </button>
           </div>
         </div>
       </div>
