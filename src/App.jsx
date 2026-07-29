@@ -1,8 +1,8 @@
 import "./App.css";
-import TodoInput from "./Components/TodoInput";
-import Tasks from "./Components/Tasks";
-import Header from "./Components/Header";
-import Navigation from "./Components/Navigation";
+import TodoInput from "./components/TodoInput";
+import Tasks from "./components/Tasks";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -92,11 +92,6 @@ export default function App() {
   const handleInput = (event) => {
     const text = event.currentTarget.value;
     setInput(text);
-  };
-
-  const handleDelete = (event) => {
-    const taskId = event.currentTarget.dataset.id;
-    if (taskId) deleteTask(taskId);
   };
 
   return (
