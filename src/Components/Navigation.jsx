@@ -1,18 +1,16 @@
-export default function Navigation({ handleNavClick, filter, activeTasks }) {
+export default function Navigation({ filterTasks, filter, activeTasks }) {
   return (
     <>
       <nav>
         <div className="nav-btn-container">
           <button
-            data-type="all"
-            onClick={handleNavClick}
+            onClick={() => filterTasks("all")}
             className={filter === "all" ? "btn nav-btn active" : "btn nav-btn"}
           >
             All
           </button>
           <button
-            data-type="active"
-            onClick={handleNavClick}
+            onClick={() => filterTasks("active")}
             className={
               filter === "active" ? "btn nav-btn active" : "btn nav-btn"
             }
@@ -20,8 +18,7 @@ export default function Navigation({ handleNavClick, filter, activeTasks }) {
             Active
           </button>
           <button
-            data-type="completed"
-            onClick={handleNavClick}
+            onClick={() => filterTasks("completed")}
             className={
               filter === "completed" ? "btn nav-btn active" : "btn nav-btn"
             }

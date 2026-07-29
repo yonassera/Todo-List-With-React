@@ -57,6 +57,7 @@ export default function App() {
   }
 
   function filterTasks(type) {
+    setFilter(type);
     if (type === "active") {
       const tempArray = tasksArray.filter(
         (taskObj) => taskObj.isCompleted === false,
@@ -88,11 +89,6 @@ export default function App() {
     }
   };
 
-  const handleCheckBox = (event) => {
-    const taskId = event.currentTarget.dataset.id;
-    if (taskId) toggleState(taskId);
-  };
-
   const handleInput = (event) => {
     const text = event.currentTarget.value;
     setInput(text);
@@ -101,12 +97,6 @@ export default function App() {
   const handleDelete = (event) => {
     const taskId = event.currentTarget.dataset.id;
     if (taskId) deleteTask(taskId);
-  };
-
-  const handleNavClick = (event) => {
-    const type = event.currentTarget.dataset.type;
-    setFilter(type);
-    filterTasks(type);
   };
 
   return (
@@ -122,14 +112,14 @@ export default function App() {
             />
             <div className="task-container">
               <Navigation
-                handleNavClick={handleNavClick}
+                filterTasks={filterTasks}
                 filter={filter}
                 activeTasks={activeTasks}
               />
               <Tasks
-                handleCheckBox={handleCheckBox}
+                toggleState={toggleState}
                 tasks={filteredTasks}
-                handleDelete={handleDelete}
+                deleteTask={deleteTask}
               />
             </div>
             <button onClick={clearCompleted} className="btn clear-btn">

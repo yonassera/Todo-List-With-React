@@ -1,4 +1,4 @@
-export default function Tasks({ handleCheckBox, tasks, handleDelete }) {
+export default function Tasks({ tasks, toggleState, deleteTask }) {
   if (tasks.length === 0) {
     return <p className="no-tasks-text">No tasks yet.</p>;
   }
@@ -11,15 +11,13 @@ export default function Tasks({ handleCheckBox, tasks, handleDelete }) {
               <label>
                 <input
                   checked={taskObj.isCompleted}
-                  onChange={handleCheckBox}
-                  data-id={taskObj.id}
+                  onChange={() => toggleState(taskObj.id)}
                   type="checkbox"
                 />
                 {taskObj.isCompleted ? <s>{taskObj.text}</s> : taskObj.text}
               </label>
               <svg
-                onClick={handleDelete}
-                data-id={taskObj.id}
+                onClick={() => deleteTask(taskObj.id)}
                 className="del-btn"
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
