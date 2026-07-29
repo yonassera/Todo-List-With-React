@@ -21,6 +21,7 @@ export default function App() {
   useEffect(() => {
     filterTasks(filter);
     calculateTaskLeft();
+    localStorage.setItem("tasks", JSON.stringify(tasksArray));
   }, [tasksArray]);
 
   function createTask() {
@@ -31,15 +32,11 @@ export default function App() {
     };
     const tempTaskArray = [taskObject, ...tasksArray];
     setTasksArray(tempTaskArray);
-    localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
   }
 
   function deleteTask(taskId) {
     const tempTaskArray = tasksArray.filter((taskObj) => taskObj.id !== taskId);
     setTasksArray(tempTaskArray);
-    localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
   }
 
   function toggleState(taskId) {
@@ -50,8 +47,6 @@ export default function App() {
       return taskObj;
     });
     setTasksArray(tempTaskArray);
-    localStorage.clear();
-    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
   }
 
   function calculateTaskLeft() {
@@ -83,8 +78,6 @@ export default function App() {
       (taskObj) => taskObj.isCompleted !== true,
     );
     setTasksArray(tempArray);
-    localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(tempArray));
   }
 
   const handleSubmit = (event) => {
