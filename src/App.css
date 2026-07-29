@@ -93,12 +93,22 @@ nav {
   background-color: var(--primary-hover);
 }
 
+.nav-btn:hover {
+  color: var(--text);
+  background-color: rgb(0, 0, 0, 0.05);
+}
+
 .btn:active {
   transform: scale(0.95);
 }
 
 .nav-btn:active {
   transform: scale(1);
+}
+
+.nav-btn.active {
+  color: var(--surface);
+  background-color: var(--primary-hover);
 }
 
 .nav-btn {

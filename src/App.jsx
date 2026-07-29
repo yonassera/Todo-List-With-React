@@ -5,17 +5,12 @@ import Header from "./Components/Header";
 import Navigation from "./Components/Navigation";
 import { useEffect, useState } from "react";
 
-class TaskConstructor {
-  constructor(text) {
-    this.id = crypto.randomUUID();
-    this.text = text;
-    this.isCompleted = false;
-  }
-}
-
 export default function App() {
   const [input, setInput] = useState("");
   const [tasksArray, setTasksArray] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
+  const [activeTasks, setActiveTasks] = useState();
 
   useEffect(() => {
     const savedData = localStorage.getItem("tasks");
@@ -23,23 +18,32 @@ export default function App() {
     setTasksArray(tasks);
   }, []);
 
-  function createTask(text) {
-    const taskObject = new TaskConstructor(text);
-    const modTaskArray = [taskObject, ...tasksArray];
-    setTasksArray(modTaskArray);
+  useEffect(() => {
+    filterTasks(filter);
+    calculateTaskLeft();
+  }, [tasksArray]);
+
+  function createTask() {
+    const taskObject = {
+      id: crypto.randomUUID(),
+      text: input,
+      isCompleted: false,
+    };
+    const tempTaskArray = [taskObject, ...tasksArray];
+    setTasksArray(tempTaskArray);
     localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(modTaskArray));
+    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
   }
 
   function deleteTask(taskId) {
-    const modTaskArray = tasksArray.filter((taskObj) => taskObj.id !== taskId);
-    setTasksArray(modTaskArray);
+    const tempTaskArray = tasksArray.filter((taskObj) => taskObj.id !== taskId);
+    setTasksArray(tempTaskArray);
     localStorage.removeItem("tasks");
-    localStorage.setItem("tasks", JSON.stringify(modTaskArray));
+    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
   }
 
   function toggleState(taskId) {
-    const modTaskArray = tasksArray.map((taskObj) => {
+    const tempTaskArray = tasksArray.map((taskObj) => {
       if (taskObj.id === taskId) {
         taskObj.isCompleted === true
           ? (taskObj.isCompleted = false)
@@ -48,15 +52,46 @@ export default function App() {
       }
       return taskObj;
     });
-    setTasksArray(modTaskArray);
+    setTasksArray(tempTaskArray);
     localStorage.clear();
-    localStorage.setItem("tasks", JSON.stringify(modTaskArray));
+    localStorage.setItem("tasks", JSON.stringify(tempTaskArray));
+  }
+
+  function calculateTaskLeft() {
+    const activeTasks = tasksArray.filter(
+      (taskObj) => taskObj.isCompleted === false,
+    );
+    setActiveTasks(activeTasks.length);
+  }
+
+  function filterTasks(type) {
+    if (type === "active") {
+      const tempArray = tasksArray.filter(
+        (taskObj) => taskObj.isCompleted === false,
+      );
+      setFilteredTasks(tempArray);
+    } else if (type === "completed") {
+      const tempArray = tasksArray.filter(
+        (taskObj) => taskObj.isCompleted === true,
+      );
+      setFilteredTasks(tempArray);
+    } else if (type === "all") {
+      const tempArray = tasksArray;
+      setFilteredTasks(tempArray);
+    }
+  }
+
+  function clearCompleted() {
+    const tempArray = tasksArray.filter((taskObj) => taskObj.isCompleted !== true)
+    setTasksArray(tempArray);
+    localStorage.removeItem("tasks")
+    localStorage.setItem("tasks", JSON.stringify(tempArray))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (input) {
-      createTask(input);
+      createTask();
       setInput("");
     }
   };
@@ -67,12 +102,19 @@ export default function App() {
   };
 
   const handleInput = (event) => {
-    setInput(event.currentTarget.value);
+    const text = event.currentTarget.value;
+    setInput(text);
   };
 
   const handleDelete = (event) => {
     const taskId = event.currentTarget.dataset.id;
     if (taskId) deleteTask(taskId);
+  };
+
+  const handleNavClick = (event) => {
+    const type = event.currentTarget.dataset.type;
+    setFilter(type);
+    filterTasks(type);
   };
 
   return (
@@ -87,14 +129,18 @@ export default function App() {
               input={input}
             />
             <div className="task-container">
-              <Navigation />
+              <Navigation
+                handleNavClick={handleNavClick}
+                filter={filter}
+                activeTasks={activeTasks}
+              />
               <Tasks
                 handleCheckBox={handleCheckBox}
-                tasks={tasksArray}
+                tasks={filteredTasks}
                 handleDelete={handleDelete}
               />
             </div>
-            <button className="btn clear-btn">Clear Completed</button>
+            <button onClick={clearCompleted} className="btn clear-btn">Clear Completed</button>
           </div>
         </div>
       </div>
